@@ -17,6 +17,7 @@ class Table extends React.PureComponent {
     this.columnManager = new ColumnManager(props.columns, props.children);
     this.store = create({
       currentHoverKey: null,
+      startIndex: 0,
       fixedColumnsHeadRowsHeight: [],
       fixedColumnsBodyRowsHeight: [],
     });
@@ -50,10 +51,10 @@ class Table extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.columnManager.isAnyColumnsFixed()) {
+    // if (this.columnManager.isAnyColumnsFixed()) {
       this.handleWindowResize();
       this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
-    }
+    // }
   }
 
   componentDidUpdate(prevProps) {
@@ -126,6 +127,8 @@ class Table extends React.PureComponent {
       return;
     }
 
+    console.log(fixedColumnsBodyRowsHeight);
+
     this.store.setState({
       fixedColumnsHeadRowsHeight,
       fixedColumnsBodyRowsHeight,
@@ -153,7 +156,7 @@ class Table extends React.PureComponent {
     const target = e.target;
     const {scroll = {}} = this.props;
     const {headTable, bodyTable} = this;
-    if (target.scrollLeft !== this.lastScrollLeft && scroll.x) {
+    if (target.scrollLeft !== this.lastScrollLeft) {
       if (target === bodyTable && headTable) {
         headTable.scrollLeft = target.scrollLeft;
       } else if (target === headTable && bodyTable) {
@@ -179,18 +182,23 @@ class Table extends React.PureComponent {
       if (bodyTable && target !== bodyTable) {
         bodyTable.scrollTop = scrollTop;
       }
-    }
-    const state = this.store.getState();
-    const fixedColumnsBodyRowsHeight = state.fixedColumnsBodyRowsHeight;
-    let sum = 0, index = 0;
-    for (let i = 0; i < fixedColumnsBodyRowsHeight.length; i++) {
-      sum += fixedColumnsBodyRowsHeight[i];
-      if (sum > target.scrollTop) {
-        index = i;
-        break;
+      const state = this.store.getState();
+      const fixedColumnsBodyRowsHeight = state.fixedColumnsBodyRowsHeight;
+      let sum = 0, index = 0;
+      if (target.scrollTop > 41) {
+        for (let i = 0; i < fixedColumnsBodyRowsHeight.length; i++) {
+          if (sum > target.scrollTop) {
+            index = i;
+            break;
+          }
+          sum += fixedColumnsBodyRowsHeight[i];
+        }
+      }
+      if (index !== state.startIndex) {
+        console.log(index, state.startIndex, this.lastScrollTop);
+        this.store.setState({startIndex: index});
       }
     }
-    console.log(index);
     this.lastScrollTop = target.scrollTop;
   };
 

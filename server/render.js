@@ -8,6 +8,6 @@ module.exports = (req, chunks) => {
     .meta({name: 'theme-color', content: '#000000'})
     .link({rel: 'shortcut icon', href: '/favicon.ico'})
     .title('table-virtualized')
-    .container()
+    .container('div')
     .toString();
 };

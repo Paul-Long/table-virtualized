@@ -2,12 +2,12 @@ import React from 'react';
 import Table from '@components/table';
 
 const columns = [
-  {title: 'title1', dataIndex: 'a', key: 'a', width: 100, fixed: 'left'},
-  {title: 'title2', dataIndex: 'b', key: 'b', width: 100, fixed: 'left'},
+  {title: 'title1', dataIndex: 'a', key: 'a', width: 100},
+  {title: 'title2', dataIndex: 'b', key: 'b', width: 100},
   {
     title: 'title3', dataIndex: 'c', key: 'c', width: 150, render: (text, record, index) => {
       if (index % 2 === 0) {
-        return [<div>{text}</div>, <div>{text}</div>]
+        return [<div key={'div1'}>{text}</div>, <div key={'div2'}>{text}</div>]
       } else {
         return text;
       }
@@ -21,12 +21,12 @@ const columns = [
   {title: 'title9', dataIndex: 'b', key: 'i', width: 150},
   {title: 'title10', dataIndex: 'b', key: 'j', width: 150},
   {title: 'title11', dataIndex: 'b', key: 'k', width: 150},
-  {title: 'title12', dataIndex: 'b', key: 'l', width: 100, fixed: 'right'},
+  {title: 'title12', dataIndex: 'b', key: 'l', width: 100},
 ];
 
 const data = [];
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 1000; i++) {
   data.push({a: 'aaa', b: 'bbb', c: '内容内容内容内容内容', d: 3, key: i + ''})
 }
 

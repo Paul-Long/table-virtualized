@@ -9,6 +9,21 @@ class TableRow extends React.PureComponent {
   onRowClick = () => {
 
   };
+  onMouseEnter = (event) => {
+    const { record, index, onRowMouseEnter, onHover, rowKey } = this.props;
+    onHover(true, rowKey);
+    if (onRowMouseEnter) {
+      onRowMouseEnter(record, index, event);
+    }
+  }
+
+  onMouseLeave = (event) => {
+    const { record, index, onRowMouseLeave, onHover, rowKey } = this.props;
+    onHover(false, rowKey);
+    if (onRowMouseLeave) {
+      onRowMouseLeave(record, index, event);
+    }
+  }
 
   render() {
     const {
@@ -54,7 +69,7 @@ class TableRow extends React.PureComponent {
       });
     const rowProps = onRow(record, index);
     const customStyle = rowProps ? rowProps.style : {};
-    let style = {height, width: 1700, top};
+    let style = {height, top};
     if (!visible) {
       style.display = 'none';
     }
@@ -63,6 +78,8 @@ class TableRow extends React.PureComponent {
       <BodyRow
         onClick={this.onRowClick}
         className={rowCLassName}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
         style={style}
       >
         {cells}
