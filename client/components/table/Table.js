@@ -11,7 +11,7 @@ import ColumnManager from './ColumnManager';
 import {addEventListener, debounce} from './Utils';
 import {create, Provider} from './mini-store';
 
-import '../theme/table.less';
+import '../theme/table.css';
 
 class Table extends React.PureComponent {
   constructor(props) {
@@ -256,8 +256,8 @@ Table.defaultProps = {
   rowRef: () => null,
   getRowHeight: () => 1,
 
-  rowHeight: 30,
-  headerRowHeight: 35
+  rowHeight: 34,
+  headerRowHeight: 31
 };
 
 Table.childContextTypes = {
