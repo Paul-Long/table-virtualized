@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from '@components/table';
+import Table from 'fast-table';
 import './style.less';
 
 const columns = [
@@ -12,7 +12,7 @@ const columns = [
 
 const data = [];
 
-for (let i = 0; i < 5000; i++) {
+for (let i = 0; i < 500; i++) {
   data.push({a: 'aaa', b: 'bbb', c: '内容内容内容内容内容', d: 3, key: i + ''})
 }
 
@@ -40,7 +40,7 @@ class App extends React.Component {
           fixedHeader
           bordered
           width={1000}
-          height={800}
+          height='90%'
           style={{marginLeft: 10, marginTop: 10}}
         />
       </div>
