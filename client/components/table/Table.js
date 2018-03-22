@@ -17,11 +17,12 @@ class Table extends React.PureComponent {
   constructor(props) {
     super(props);
     this.columnManager = new ColumnManager(props.columns);
+    this.lastScrollTop = 0;
     this.store = create({
       currentHoverKey: null,
       hasScroll: false,
       fixedColumnsHeadRowsHeight: [],
-      fixedColumnsBodyRowsHeight: []
+      ...this.resetBodyHeight()
     });
     this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
   }
@@ -49,13 +50,30 @@ class Table extends React.PureComponent {
     }
   }
 
+  componentWillMount() {
+    this.timer = (new Date()).getTime();
+
+  }
+
   componentDidMount() {
     this.handleWindowResize();
     this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
+    let n = (new Date()).getTime();
+    console.log('table render time -> ', n - this.timer);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!shallowEqual(nextProps.dataSource, this.props.dataSource)) {
+      this.store.setState({
+        fixedColumnsBodyRowsHeight: this.resetBodyHeight()
+      });
+    }
   }
 
   handleWindowResize = () => {
-    this.syncFixedTableRowHeight();
+    setTimeout(() => {
+      this.syncFixedTableRowHeight();
+    });
   };
 
   syncFixedTableRowHeight = () => {
@@ -63,20 +81,13 @@ class Table extends React.PureComponent {
     if (tableRect.height !== undefined && tableRect.height <= 0) {
       return;
     }
-    const {dataSource, getRowHeight, rowHeight} = this.props;
     const headRows = this['headTable'] ?
       this['headTable'].querySelectorAll('.thead') :
       this['bodyTable'].querySelectorAll('.thead');
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows, row => row.getBoundingClientRect().height || 'auto'
     );
-
-    this.timer = (new Date()).getTime();
-    const fixedColumnsBodyRowsHeight = dataSource.map((record, index) => {
-      return getRowHeight(record, index) * rowHeight + 1;
-    });
-    let n = (new Date()).getTime();
-    console.log('group height time -> ', n - this.timer);
+    const {fixedColumnsBodyRowsHeight, tops} = this.resetBodyHeight();
     const state = this.store.getState();
     if (shallowEqual(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
       shallowEqual(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
@@ -89,27 +100,37 @@ class Table extends React.PureComponent {
     this.store.setState({
       hasScroll,
       fixedColumnsHeadRowsHeight,
-      fixedColumnsBodyRowsHeight,
-      ...this.resetRenderInterval(0, this['bodyTable'].clientHeight, totalHeight)
+      tops,
+      ...this.resetRenderInterval(0, this['bodyTable'].clientHeight, totalHeight, fixedColumnsBodyRowsHeight)
     });
   };
 
   handleBodyScroll = (e) => {
     const target = e.target;
-    const result = this.resetRenderInterval(target.scrollTop, target.clientHeight, target.scrollHeight);
-    this.store.setState(result);
+    if (this.lastScrollTop !== target.scrollTop && target !== this['headTabl']) {
+      const result = this.resetRenderInterval(target.scrollTop, target.clientHeight, target.scrollHeight);
+      this.store.setState(result);
+    }
+    this.lastScrollTop = target.scrollTop;
   };
 
   resetBodyHeight = () => {
     const {dataSource, getRowHeight, rowHeight} = this.props;
-    return dataSource.map((record, index) => {
-      return getRowHeight(record, index) * rowHeight + 1;
+    let tops = [], top = 0;
+    const fixedColumnsBodyRowsHeight = dataSource.map((record, index) => {
+      const height = getRowHeight(record, index) * rowHeight + 1;
+      tops.push(top);
+      top += height;
+      return height;
     });
+    return {fixedColumnsBodyRowsHeight, tops};
   };
 
-  resetRenderInterval = (scrollTop, clientHeight, scrollHeight) => {
-    const state = this.store.getState();
-    const fixedColumnsBodyRowsHeight = state.fixedColumnsBodyRowsHeight;
+  resetRenderInterval = (scrollTop, clientHeight, scrollHeight, fixedColumnsBodyRowsHeight) => {
+    if (!fixedColumnsBodyRowsHeight) {
+      const state = this.store.getState();
+      fixedColumnsBodyRowsHeight = state.fixedColumnsBodyRowsHeight;
+    }
     let start = 0, end = 0, top = 0, isStart = false, isEnd = false;
     for (let index = 0; index < fixedColumnsBodyRowsHeight.length; index++) {
       const height = fixedColumnsBodyRowsHeight[index];
@@ -191,6 +212,7 @@ class Table extends React.PureComponent {
 
   render() {
     const {prefixCls} = this.props;
+    console.log('table render ');
     return (
       <Provider store={this.store}>
         <div className={`${prefixCls}-wrapper`}>

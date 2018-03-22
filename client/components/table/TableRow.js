@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import sum from 'lodash/sum';
-import slice from 'lodash/slice';
 import TableCell from './TableCell';
 import {connect} from './mini-store';
 
@@ -64,11 +62,11 @@ class TableRow extends React.PureComponent {
 }
 
 export default connect((state, props) => {
-  const {currentHoverKey, fixedColumnsBodyRowsHeight} = state;
+  const {currentHoverKey, tops} = state;
   const {rowKey, index} = props;
   return {
     hovered: currentHoverKey === rowKey,
-    top: sum(slice(fixedColumnsBodyRowsHeight, 0, index))
+    top: tops[index]
   }
 })(TableRow);
 

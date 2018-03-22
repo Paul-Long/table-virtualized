@@ -9,15 +9,11 @@ function HeadTable(props, {table}) {
   const {saveRef} = table;
   let {fixedHeader} = table.props;
   const headStyle = {};
-  // const scrollbarWidth = measureScrollbar('horizontal');
-  // if (scrollbarWidth > 0 && !fixed) {
-  //   headStyle.marginBottom = `-${scrollbarWidth}px`;
-  //   headStyle.paddingBottom = '0px';
-  // }
   if (!fixedHeader || !showHeader) {
     return null;
   }
   headStyle.overflowY = hasScroll ? 'scroll' : 'auto';
+  console.log('head table render ');
   return (
     <div
       key='headTable'

@@ -45,7 +45,7 @@
   }
   .tr {
     overflow: hidden;
-    white-space: nowrap;
+    //white-space: nowrap;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -60,8 +60,9 @@
     line-height: @tableThHeight;
   }
   .td {
-    height: @tableTdHeight;
-    line-height: @tableTdHeight;
-    padding: @tdPadding;
+    //padding: @tdPadding;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
   }
 }

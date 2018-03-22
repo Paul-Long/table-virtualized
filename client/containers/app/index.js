@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from '@components/table2';
+import Table from '@components/table';
 import './style.less';
 
 const columns = [
@@ -12,7 +12,7 @@ const columns = [
 
 const data = [];
 
-for (let i = 0; i < 2000; i++) {
+for (let i = 0; i < 10000; i++) {
   data.push({a: 'aaa', b: 'bbb', c: '内容内容内容内容内容', d: 3, key: i + ''})
 }
 

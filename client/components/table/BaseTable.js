@@ -6,8 +6,16 @@ import TableRow from './TableRow';
 import {connect} from './mini-store';
 
 class BaseTable extends React.PureComponent {
-  renderRows = (datas) => {
+  componentWillMount() {
     this.timer = (new Date()).getTime();
+  }
+
+  componentDidMount() {
+    let n = (new Date()).getTime();
+    console.log('base table render time -> ', n - this.timer);
+  }
+
+  renderRows = (datas) => {
     const rows = [];
     const {
       getRowKey,
@@ -23,37 +31,33 @@ class BaseTable extends React.PureComponent {
       rowHeight
     } = table.props;
     const columnManager = table.columnManager;
+    console.log(renderStart, renderEnd);
     datas.forEach((record, i) => {
-      if (i < renderStart || i > renderEnd) {
-        return;
+      if (i >= renderStart && i <= renderEnd) {
+        let leafColumns;
+        if (fixed === 'left') {
+          leafColumns = columnManager.leftLeafColumns();
+        } else if (fixed === 'right') {
+          leafColumns = columnManager.rightLeafColumns();
+        } else {
+          leafColumns = columnManager.leafColumns();
+        }
+        const key = getRowKey(record, i);
+        const props = {
+          key,
+          record,
+          fixed,
+          prefixCls,
+          rowKey: key,
+          index: i,
+          columns: leafColumns,
+          ref: rowRef(record, i),
+          components: table.components,
+          height: getRowHeight(record, i) * rowHeight
+        };
+        rows.push(<TableRow {...props} />);
       }
-      let leafColumns;
-      if (fixed === 'left') {
-        leafColumns = columnManager.leftLeafColumns();
-      } else if (fixed === 'right') {
-        leafColumns = columnManager.rightLeafColumns();
-      } else {
-        leafColumns = columnManager.leafColumns();
-      }
-      const key = getRowKey(record, i);
-      const row = (
-        <TableRow
-          key={key}
-          rowKey={key}
-          record={record}
-          index={i}
-          fixed={fixed}
-          columns={leafColumns}
-          ref={rowRef(record, i)}
-          components={table.components}
-          prefixCls={prefixCls}
-          height={getRowHeight(record, i) * rowHeight}
-        />
-      );
-      rows.push(row);
     });
-    let n = (new Date()).getTime();
-    console.log('render cells time -> ', n - this.timer);
     return rows;
   };
 
@@ -85,6 +89,7 @@ export default connect((state) => {
   return {
     hasScroll,
     height: sum(fixedColumnsBodyRowsHeight),
+    fixedColumnsBodyRowsHeight,
     renderStart,
     renderEnd
   }
