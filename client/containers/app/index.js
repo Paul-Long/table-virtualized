@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from '@components/table';
+import Table from 'fast-table';
 import './style.css';
 
 const columns = [
@@ -69,7 +69,6 @@ class App extends React.Component {
           bordered
           width='90%'
           height='90%'
-          style={{marginLeft: 10, marginTop: 10}}
         />
       </div>
     )
