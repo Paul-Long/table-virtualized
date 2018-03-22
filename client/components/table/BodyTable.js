@@ -30,7 +30,6 @@ function BodyTable(props, {table}) {
     style.height = 'auto';
     style.overflowY = 'hidden';
   }
-  console.log('body table render ');
   return (
     <div
       key='bodyTable'

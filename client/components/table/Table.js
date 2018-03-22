@@ -50,16 +50,9 @@ class Table extends React.PureComponent {
     }
   }
 
-  componentWillMount() {
-    this.timer = (new Date()).getTime();
-
-  }
-
   componentDidMount() {
     this.handleWindowResize();
     this.resizeEvent = addEventListener(window, 'resize', this.debouncedWindowResize);
-    let n = (new Date()).getTime();
-    console.log('table render time -> ', n - this.timer);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -87,21 +80,19 @@ class Table extends React.PureComponent {
     const fixedColumnsHeadRowsHeight = [].map.call(
       headRows, row => row.getBoundingClientRect().height || 'auto'
     );
-    const {fixedColumnsBodyRowsHeight, tops} = this.resetBodyHeight();
+    const {fixedColumnsBodyRowsHeight, tops, bodyHeight} = this.resetBodyHeight();
     const state = this.store.getState();
     if (shallowEqual(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
       shallowEqual(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
     }
-
-    const totalHeight = sum(fixedColumnsBodyRowsHeight);
-
-    const hasScroll = this['bodyTable'].getBoundingClientRect().height < totalHeight;
+    const hasScroll = this['bodyTable'].getBoundingClientRect().height < bodyHeight;
     this.store.setState({
       hasScroll,
       fixedColumnsHeadRowsHeight,
       tops,
-      ...this.resetRenderInterval(0, this['bodyTable'].clientHeight, totalHeight, fixedColumnsBodyRowsHeight)
+      bodyHeight,
+      ...this.resetRenderInterval(0, this['bodyTable'].clientHeight, bodyHeight, fixedColumnsBodyRowsHeight)
     });
   };
 
@@ -123,7 +114,7 @@ class Table extends React.PureComponent {
       top += height;
       return height;
     });
-    return {fixedColumnsBodyRowsHeight, tops};
+    return {fixedColumnsBodyRowsHeight, tops, bodyHeight: sum(fixedColumnsBodyRowsHeight)};
   };
 
   resetRenderInterval = (scrollTop, clientHeight, scrollHeight, fixedColumnsBodyRowsHeight) => {
@@ -212,7 +203,6 @@ class Table extends React.PureComponent {
 
   render() {
     const {prefixCls} = this.props;
-    console.log('table render ');
     return (
       <Provider store={this.store}>
         <div className={`${prefixCls}-wrapper`}>

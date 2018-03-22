@@ -13,7 +13,6 @@ function HeadTable(props, {table}) {
     return null;
   }
   headStyle.overflowY = hasScroll ? 'scroll' : 'auto';
-  console.log('head table render ');
   return (
     <div
       key='headTable'

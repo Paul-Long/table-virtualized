@@ -1,20 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import sum from 'lodash/sum';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 import {connect} from './mini-store';
 
 class BaseTable extends React.PureComponent {
-  componentWillMount() {
-    this.timer = (new Date()).getTime();
-  }
-
-  componentDidMount() {
-    let n = (new Date()).getTime();
-    console.log('base table render time -> ', n - this.timer);
-  }
-
   renderRows = (datas) => {
     const rows = [];
     const {
@@ -31,7 +21,6 @@ class BaseTable extends React.PureComponent {
       rowHeight
     } = table.props;
     const columnManager = table.columnManager;
-    console.log(renderStart, renderEnd);
     datas.forEach((record, i) => {
       if (i >= renderStart && i <= renderEnd) {
         let leafColumns;
@@ -62,19 +51,18 @@ class BaseTable extends React.PureComponent {
   };
 
   render() {
-    const {hasHead, hasBody, columns, fixed, height} = this.props;
+    const {hasHead, hasBody, columns, fixed, bodyHeight} = this.props;
     const table = this.context.table;
     const components = table.components;
     let body;
     const BodyWrapper = components.body.wrapper;
     if (hasBody) {
       body = (
-        <BodyWrapper className='tbody' style={{height}}>
+        <BodyWrapper className='tbody' style={{height: bodyHeight}}>
           {this.renderRows(table.props.dataSource)}
         </BodyWrapper>
       )
     }
-    console.log('base table render');
     return (
       <div className='table'>
         {hasHead && <TableHeader columns={columns} fixed={fixed}/>}
@@ -85,10 +73,10 @@ class BaseTable extends React.PureComponent {
 }
 
 export default connect((state) => {
-  const {hasScroll, fixedColumnsBodyRowsHeight, renderStart, renderEnd} = state;
+  const {hasScroll, fixedColumnsBodyRowsHeight, renderStart, renderEnd, bodyHeight} = state;
   return {
     hasScroll,
-    height: sum(fixedColumnsBodyRowsHeight),
+    bodyHeight,
     fixedColumnsBodyRowsHeight,
     renderStart,
     renderEnd
