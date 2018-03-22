@@ -1,8 +1,10 @@
 import React from 'react';
+import isNumber from 'lodash/isNumber';
 
-function TableHeaderRow({row, index, height, components}) {
+function TableHeaderRow({row, index, height, components, columns}) {
   const HeaderRow = components.header.row;
   const HeaderCell = components.header.cell;
+  const columnSize = columns.length;
   return (
     <HeaderRow className='tr'>
       {row.map((cell, i) => {
@@ -13,7 +15,7 @@ function TableHeaderRow({row, index, height, components}) {
         }
         if (column.width) {
           let style = cellProps.style || {};
-          style.width = column.width;
+          style.flex = `${i + 1 === columnSize ? 1 : 0} 1 ${isNumber(column.width) ? column.width + 'px' : column.width}`;
           cellProps.style = style;
         } else {
           cellProps.style.flex = 1;

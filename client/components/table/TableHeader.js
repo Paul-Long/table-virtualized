@@ -38,6 +38,7 @@ export default function TableHeader(props, {table}) {
   const components = table.components;
   const HeaderWrapper = components.header.wrapper;
   const rows = getHeaderRows(columns);
+  const columnSize = columns.length;
   return (
     <HeaderWrapper className='thead'>
       {
@@ -50,6 +51,7 @@ export default function TableHeader(props, {table}) {
             rows={rows}
             row={row}
             components={components}
+            isLast={index + 1 === columnSize}
           />
         ))
       }

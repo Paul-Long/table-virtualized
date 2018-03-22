@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import get from 'lodash/get';
+import isNumber from 'lodash/isNumber';
 
 class TableCell extends React.PureComponent {
   isInvalidRenderCellText = (text) => {
@@ -16,7 +17,8 @@ class TableCell extends React.PureComponent {
       index,
       column,
       component: BodyCell,
-      height
+      height,
+      isLast
     } = this.props;
     const {dataIndex, render, className = ''} = column;
     let text;
@@ -51,7 +53,7 @@ class TableCell extends React.PureComponent {
     }
     let style = tdProps.style || {};
     if (column.width) {
-      style.width = column.width;
+      style.flex = `${isLast ? 1 : 0} 1 ${isNumber(column.width) ? column.width + 'px' : column.width}`;
     } else {
       style.flex = 1;
     }
@@ -78,5 +80,10 @@ TableCell.propTypes = {
   indent: PropTypes.number,
   indentSize: PropTypes.number,
   column: PropTypes.object,
-  component: PropTypes.any
+  component: PropTypes.any,
+  isLast: PropTypes.bool
+};
+
+TableCell.defaultProps = {
+  isLast: false
 };

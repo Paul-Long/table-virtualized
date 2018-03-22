@@ -23,6 +23,7 @@ class TableRow extends React.PureComponent {
   renderCells = () => {
     const {columns, prefixCls, record, index, components, height} = this.props;
     const cells = [];
+    const columnSize = columns.length;
     columns.forEach((column, i) => {
       cells.push(
         <TableCell
@@ -33,6 +34,7 @@ class TableRow extends React.PureComponent {
           key={column.key || column.dataIndex}
           component={components.body.cell}
           height={height}
+          isLast={i + 1 === columnSize}
         />
       );
     });

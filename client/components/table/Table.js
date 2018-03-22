@@ -163,6 +163,14 @@ class Table extends React.PureComponent {
     );
   };
 
+  getStyle = () => {
+    const {width, height, style} = this.props;
+    const baseStyle = Object.assign({}, style);
+    width && (baseStyle.width = width);
+    height && (baseStyle.height = height);
+    return baseStyle;
+  };
+
   getRowKey = (record, index) => {
     const rowKey = this.props.rowKey;
     if (typeof rowKey === 'function') {
@@ -195,23 +203,20 @@ class Table extends React.PureComponent {
   };
 
   renderMainTable = () => {
-    const table = this.renderTable({
+    return this.renderTable({
       columns: this.columnManager.groupedColumns()
     });
-    return table;
   };
 
   render() {
-    const {prefixCls} = this.props;
     return (
       <Provider store={this.store}>
-        <div className={`${prefixCls}-wrapper`}>
-          <div
-            className={this.getClassName()}
-            ref={this.saveRef('tableNode')}
-          >
-            {this.renderMainTable()}
-          </div>
+        <div
+          className={this.getClassName()}
+          ref={this.saveRef('tableNode')}
+          style={this.getStyle()}
+        >
+          {this.renderMainTable()}
         </div>
       </Provider>
     )

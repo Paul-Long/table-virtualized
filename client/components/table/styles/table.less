@@ -1,18 +1,15 @@
 @import "variable";
+@import "mixins";
 @import "bordered";
 
-.@{tablePrefixCls}-wrapper {
-  overflow: hidden;
-}
-
 .@{tablePrefixCls} {
-  border-left: 1px solid @tableBorderColor;
-  border-top: 1px solid @tableBorderColor;
+  .border();
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  background: @tableBgColor;
   &-header {
     background: @tableHeaderBg;
     color: @tableHeaderText;
