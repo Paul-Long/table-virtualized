@@ -11,16 +11,46 @@ class TableCell extends React.PureComponent {
       && Object.prototype.toString.call(text) === '[object Object]';
   };
 
+  getStyle = () => {
+    const {
+      column,
+      height,
+      isLast
+    } = this.props;
+    let style = Object.assign({}, column.bodyStyle);
+    if (column.align) {
+      style.textAlign = column.align;
+    }
+    if (column.width) {
+      style.flex = `${isLast ? 1 : 0} 1 ${isNumber(column.width) ? column.width + 'px' : column.width}`;
+    } else {
+      style.flex = 1;
+    }
+    style.height = height;
+    style.lineHeight = `${height}px`;
+    return style;
+  };
+
+  getClassName = () => {
+    const {record, index, column} = this.props;
+    const {tdClassName} = column;
+    let cls = '';
+    if (typeof tdClassName === 'function') {
+      cls = tdClassName(column, record, index);
+    } else if (tdClassName === 'string') {
+      cls = tdClassName;
+    }
+    return classNames('td', cls);
+  };
+
   render() {
     const {
       record,
       index,
       column,
-      component: BodyCell,
-      height,
-      isLast
+      component: BodyCell
     } = this.props;
-    const {dataIndex, render, className = ''} = column;
+    const {dataIndex, render} = column;
     let text;
     if (typeof dataIndex === 'number') {
       text = get(record, dataIndex);
@@ -39,30 +69,16 @@ class TableCell extends React.PureComponent {
         text = text.children;
       }
     }
-    if (column.onCell) {
-      tdProps = {...tdProps, ...column.onCell(record)};
-    }
     if (this.isInvalidRenderCellText(text)) {
       text = null;
     }
     if (rowSpan === 0 || colSpan === 0) {
       return null;
     }
-    if (column.align) {
-      tdProps.style = {textAlign: column.align};
-    }
-    let style = tdProps.style || {};
-    if (column.width) {
-      style.flex = `${isLast ? 1 : 0} 1 ${isNumber(column.width) ? column.width + 'px' : column.width}`;
-    } else {
-      style.flex = 1;
-    }
-    style.height = height;
-    style.lineHeight = `${height}px`;
-    tdProps.style = style;
+    tdProps.style = this.getStyle();
     return (
       <BodyCell
-        className={classNames(className, 'td')}
+        className={this.getClassName()}
         {...tdProps}
       >
         {text}

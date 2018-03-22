@@ -1,15 +1,16 @@
 import React from 'react';
+import classNames from 'classnames';
 import isNumber from 'lodash/isNumber';
 
-function TableHeaderRow({row, index, height, components, columns}) {
+function TableHeaderRow({row, index, height, components, columns, rowHeight}) {
   const HeaderRow = components.header.row;
   const HeaderCell = components.header.cell;
   const columnSize = columns.length;
   return (
     <HeaderRow className='tr'>
       {row.map((cell, i) => {
-        const {column, ...cellProps} = cell;
-        cellProps.style = Object.assign({}, cellProps.style);
+        const {column, className, ...cellProps} = cell;
+        cellProps.style = Object.assign({}, column.style);
         if (column.align) {
           cellProps.style = {textAlign: column.dataIndex || i};
         }
@@ -20,11 +21,14 @@ function TableHeaderRow({row, index, height, components, columns}) {
         } else {
           cellProps.style.flex = 1;
         }
+        cellProps.style.height = rowHeight;
+        cellProps.style.lineHeight = `${rowHeight}px`;
+        const cellClass = classNames('th', className);
         return (
           <HeaderCell
             key={column.key || column.dataIndex || i}
             {...cellProps}
-            className='th'
+            className={cellClass}
           />
         )
       })}

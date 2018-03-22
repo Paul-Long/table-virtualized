@@ -35,6 +35,7 @@ function getHeaderRows(columns, currentRow = 0, rows) {
 
 export default function TableHeader(props, {table}) {
   const {columns, fixed} = props;
+  const {headerRowHeight} = table.props;
   const components = table.components;
   const HeaderWrapper = components.header.wrapper;
   const rows = getHeaderRows(columns);
@@ -50,6 +51,7 @@ export default function TableHeader(props, {table}) {
             columns={columns}
             rows={rows}
             row={row}
+            rowHeight={headerRowHeight}
             components={components}
             isLast={index + 1 === columnSize}
           />

@@ -56,7 +56,12 @@ class TableRow extends React.PureComponent {
       top
     };
     return (
-      <BodyRow className={cls} style={style}>
+      <BodyRow
+        className={cls}
+        style={style}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
+      >
         {this.renderCells()}
       </BodyRow>
     )

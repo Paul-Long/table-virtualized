@@ -44,6 +44,7 @@
   },
   "homepage": "https://github.com/Paul-Long/table-virtualized#readme",
   "dependencies": {
+    "fast-table": "^1.0.0",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",

@@ -109,7 +109,7 @@ class Table extends React.PureComponent {
     const {dataSource, getRowHeight, rowHeight} = this.props;
     let tops = [], top = 0;
     const fixedColumnsBodyRowsHeight = dataSource.map((record, index) => {
-      const height = getRowHeight(record, index) * rowHeight + 1;
+      const height = getRowHeight(record, index) * rowHeight;
       tops.push(top);
       top += height;
       return height;
@@ -118,6 +118,7 @@ class Table extends React.PureComponent {
   };
 
   resetRenderInterval = (scrollTop, clientHeight, scrollHeight, fixedColumnsBodyRowsHeight) => {
+    const {rowHeight} = this.props;
     if (!fixedColumnsBodyRowsHeight) {
       const state = this.store.getState();
       fixedColumnsBodyRowsHeight = state.fixedColumnsBodyRowsHeight;
@@ -135,10 +136,10 @@ class Table extends React.PureComponent {
       }
       top += height;
     }
-    if (scrollTop <= 31) {
+    if (scrollTop <= rowHeight) {
       start = 0;
     }
-    if (scrollTop + clientHeight >= scrollHeight - 31) {
+    if (scrollTop + clientHeight >= scrollHeight - rowHeight) {
       end = fixedColumnsBodyRowsHeight.length - 1;
     }
     return {
@@ -239,7 +240,8 @@ Table.propTypes = {
   rowRef: PropTypes.func,
   getRowHeight: PropTypes.func,
 
-  rowHeight: PropTypes.number
+  rowHeight: PropTypes.number,
+  headerRowHeight: PropTypes.number
 };
 
 Table.defaultProps = {
@@ -254,7 +256,8 @@ Table.defaultProps = {
   rowRef: () => null,
   getRowHeight: () => 1,
 
-  rowHeight: 30
+  rowHeight: 30,
+  headerRowHeight: 35
 };
 
 Table.childContextTypes = {
