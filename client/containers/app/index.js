@@ -20,7 +20,7 @@ const columns = [
     bodyStyle: {background: '#1E1F17', color: '#FF9200'},
     children: [
       {
-        title: 'title11', align: 'left', dataIndex: 'a1', width: '10%', children: [
+        title: 'title11', align: 'left', dataIndex: 'a1', width: '100', children: [
           {title: 'title111', align: 'left', dataIndex: 'a11', width: '5%'},
           {title: 'title112', align: 'left', dataIndex: 'a12', width: '5%'}
         ]
@@ -62,7 +62,7 @@ const columns = [
 
 const data = [];
 
-for (let i = 0; i < 2000; i++) {
+for (let i = 0; i < 5000; i++) {
   data.push({
     a: '4.88',
     b: '1000',
@@ -104,6 +104,7 @@ class App extends React.Component {
           bordered
           width={'calc(100% - 10px)'}
           height={'calc(100% - 10px)'}
+          footer={() => '加载更多'}
         />
       </div>
     )
