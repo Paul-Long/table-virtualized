@@ -3,7 +3,6 @@ const path = require('path');
 const cpus = require('os').cpus().length;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HappyPack = require('happypack');
-const WebpackMd5Hash = require('webpack-md5-hash');
 const happyThreadPool = HappyPack.ThreadPool({size: cpus});
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
@@ -81,7 +80,6 @@ config.module = {
 
 // plugins
 config.plugins = [
-  new WebpackMd5Hash(),
   new CaseSensitivePathsPlugin(),
   new CleanPlugin([path.resolve(__dirname, 'dist')], {verbose: true}),
   new ExtractTextPlugin({filename: '[name].[contenthash:8].css', allChunks: true}),
