@@ -7,6 +7,7 @@ const columns = [
     title: '第一列',
     align: 'left',
     dataIndex: 'key',
+    sortEnable: true,
     order: true,
     width: 400,
     bodyStyle: {background: '#121A18', color: '#F9C152'}
@@ -15,6 +16,7 @@ const columns = [
     title: '第二列',
     dataIndex: 'key0',
     width: 400,
+    sortEnable: true,
     bodyStyle: {background: '#1E1F17', color: '#FF9200'},
     // children: [
     //   {
@@ -102,6 +104,7 @@ class App extends React.Component {
           width={'calc(100% - 10px)'}
           height={'calc(100% - 10px)'}
           footer={() => '加载更多'}
+          sortMulti={false}
           onSort={(column, order) => {
             // console.log(order);
             const data = this.state.data;
