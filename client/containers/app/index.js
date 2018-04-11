@@ -110,6 +110,9 @@ class App extends React.Component {
             const data = this.state.data;
             this.setState({data: [...data].reverse()});
           }}
+          onScrollEnd={() => {
+            console.log('onScrollEnd refresh');
+          }}
         />
       </div>
     )
