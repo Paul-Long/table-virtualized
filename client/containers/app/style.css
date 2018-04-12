@@ -1,7 +1,7 @@
 body {
   background: #dddddd;
+  font-size: 12px;
 }
-
 body .vt {
   transform-origin: 50% 50%;
   position: absolute;
@@ -9,26 +9,21 @@ body .vt {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background-color: transparent;
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb {
   background-color: #424244;
   border-radius: 51px;
 }
-
 ::-webkit-scrollbar-thumb:active {
   background-color: #179595;
 }
-
 ::-webkit-scrollbar-corner {
   background-color: transparent;
 }
