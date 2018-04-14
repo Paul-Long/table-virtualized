@@ -89,6 +89,7 @@ const columns = [
   {
     title: '第十列',
     align: 'left',
+    fixed: 'right',
     dataIndex: 'key8',
     width: 100,
   },
@@ -144,7 +145,7 @@ class App extends React.Component {
         <Table
           columns={columns}
           dataSource={this.state.data}
-          fixedHeader
+          fixedHeader={false}
           showHeader
           bordered
           width={'calc(100% - 10px)'}
