@@ -38,13 +38,13 @@ const columns = [
     title: '第三列',
     dataIndex: 'key1',
     width: 100,
-    // bodyStyle: {background: '#122024', color: '#11A1FF'},
+    bodyStyle: {background: '#122024', color: '#11A1FF'},
     // children: [
     //   {
-    //     title: 'title21', align: 'left', dataIndex: 'b1', width: '15%'
+    //     title: '第三列-01', align: 'left', dataIndex: 'b1', width: 120
     //   },
     //   {
-    //     title: 'title22', align: 'right', dataIndex: 'b2', width: '15%'
+    //     title: '第三列-02', align: 'right', dataIndex: 'b2', width: 120
     //   }
     // ]
   },
@@ -91,14 +91,14 @@ const columns = [
     align: 'left',
     fixed: 'right',
     dataIndex: 'key8',
-    width: 100,
+    width: 300,
   },
 ];
 
 function update() {
   const data = [];
 
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 10000; i++) {
     const row = {key: `${i}`};
     for (let j = 0; j < 10; j++) {
       row[`key${j}`] = Math.random().toString(36).substr(2);
@@ -149,7 +149,8 @@ class App extends React.Component {
           showHeader
           bordered
           width={'calc(100% - 10px)'}
-          height={'calc(100% - 10px)'}
+          // height={'calc(100% - 10px)'}
+          height={300}
           footer={() => '加载更多'}
           sortMulti={false}
           onSort={(column, order) => {

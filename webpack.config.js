@@ -45,9 +45,9 @@ config.module = {
     {
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
-      // include: [
-      //   path.resolve(__dirname, 'client')
-      // ],
+      include: [
+        path.resolve(__dirname, 'client')
+      ],
       // loader: 'babel-loader'
       loader: 'happypack/loader?id=js'
     }, {

@@ -26,6 +26,8 @@ if (isDev) {
   }));
   app.use(webpackHotMiddleWare(compiler));
 } else {
+  const compression = require('compression');
+  app.use(compression());
   chunks = JSON.parse(fs.readFileSync(config.output.path + '/chunkNames.json')).assetsByChunkName;
 }
 
