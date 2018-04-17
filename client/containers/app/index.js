@@ -9,7 +9,7 @@ const columns = [
     dataIndex: 'key',
     sortEnable: true,
     order: true,
-    fixed: 'left',
+    // fixed: 'left',
     width: 100,
     // bodyStyle: {background: '#121A18', color: '#F9C152'}
   },
@@ -89,7 +89,7 @@ const columns = [
   {
     title: '第十列',
     align: 'left',
-    fixed: 'right',
+    // fixed: 'right',
     dataIndex: 'key8',
     width: 300,
   },
@@ -145,12 +145,12 @@ class App extends React.Component {
         <Table
           columns={columns}
           dataSource={this.state.data}
-          fixedHeader={false}
+          fixedHeader
           showHeader
           bordered
           width={'calc(100% - 10px)'}
           // height={'calc(100% - 10px)'}
-          height={300}
+          height={'100%'}
           footer={() => '加载更多'}
           sortMulti={false}
           onSort={(column, order) => {
