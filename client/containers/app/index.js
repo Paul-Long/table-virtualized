@@ -9,7 +9,7 @@ const columns = [
     dataIndex: 'key',
     sortEnable: true,
     order: true,
-    // fixed: 'left',
+    fixed: 'left',
     width: 100,
     // bodyStyle: {background: '#121A18', color: '#F9C152'}
   },
@@ -17,6 +17,7 @@ const columns = [
     title: '第二列',
     dataIndex: 'key0',
     width: 100,
+    fixed: 'left',
     sortEnable: true,
     // bodyStyle: {background: '#1E1F17', color: '#FF9200'},
     // children: [
@@ -89,7 +90,7 @@ const columns = [
   {
     title: '第十列',
     align: 'left',
-    // fixed: 'right',
+    fixed: 'right',
     dataIndex: 'key8',
     width: 300,
   },
@@ -98,7 +99,7 @@ const columns = [
 function update() {
   const data = [];
 
-  for (let i = 0; i < 10000; i++) {
+  for (let i = 0; i < 29; i++) {
     const row = {key: `${i}`};
     for (let j = 0; j < 10; j++) {
       row[`key${j}`] = Math.random().toString(36).substr(2);
