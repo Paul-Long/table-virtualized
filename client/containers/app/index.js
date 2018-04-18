@@ -99,7 +99,7 @@ const columns = [
 function update() {
   const data = [];
 
-  for (let i = 0; i < 29; i++) {
+  for (let i = 0; i < 1000; i++) {
     const row = {key: `${i}`};
     for (let j = 0; j < 10; j++) {
       row[`key${j}`] = Math.random().toString(36).substr(2);
@@ -149,11 +149,9 @@ class App extends React.Component {
           fixedHeader
           showHeader
           bordered
-          width={'calc(100% - 10px)'}
-          // height={'calc(100% - 10px)'}
-          height={'100%'}
           footer={() => '加载更多'}
           sortMulti={false}
+          expandedRowKeys={['0', '2']}
           onSort={(column, order) => {
             // console.log(order);
             const data = this.state.data;
@@ -164,7 +162,7 @@ class App extends React.Component {
           }}
         />
       </div>
-    )
+    );
   }
 }
 
