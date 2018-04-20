@@ -1,4 +1,4 @@
-const order = ['runtime', 'common', 'vendor', 'main'];
+const order = ['main'];
 const Render = require('render-template');
 
 module.exports = (req, chunks) => {
