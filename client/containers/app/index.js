@@ -11,6 +11,7 @@ const columns = [
     order: true,
     fixed: 'left',
     width: 100,
+    render: (text) => (<span>{text}</span>)
     // bodyStyle: {background: '#121A18', color: '#F9C152'}
   },
   {
@@ -63,37 +64,37 @@ const columns = [
     width: 100,
     // bodyStyle: {background: '#121A18', color: '#7B8280'}
   },
-  {
-    title: '第六列',
-    align: 'left',
-    dataIndex: 'key4',
-    width: 100,
-  },
-  {
-    title: '第七列',
-    align: 'left',
-    dataIndex: 'key5',
-    width: 100,
-  },
-  {
-    title: '第八列',
-    align: 'left',
-    dataIndex: 'key6',
-    width: 100,
-  },
-  {
-    title: '第九列',
-    align: 'left',
-    dataIndex: 'key7',
-    width: 100,
-  },
-  {
-    title: '第十列',
-    align: 'left',
-    fixed: 'right',
-    dataIndex: 'key8',
-    width: 300,
-  },
+  // {
+  //   title: '第六列',
+  //   align: 'left',
+  //   dataIndex: 'key4',
+  //   width: 100,
+  // },
+  // {
+  //   title: '第七列',
+  //   align: 'left',
+  //   dataIndex: 'key5',
+  //   width: 100,
+  // },
+  // {
+  //   title: '第八列',
+  //   align: 'left',
+  //   dataIndex: 'key6',
+  //   width: 100,
+  // },
+  // {
+  //   title: '第九列',
+  //   align: 'left',
+  //   dataIndex: 'key7',
+  //   width: 100,
+  // },
+  // {
+  //   title: '第十列',
+  //   align: 'left',
+  //   fixed: 'right',
+  //   dataIndex: 'key8',
+  //   width: 300,
+  // },
 ];
 
 function update() {

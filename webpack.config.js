@@ -7,6 +7,7 @@ const happyThreadPool = HappyPack.ThreadPool({size: cpus});
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const StatsOutPlugin = require('stats-out-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const ENV = process.env.NODE_ENV;
 
@@ -124,6 +125,20 @@ if (ENV === 'production') {
 
   const stats = new StatsOutPlugin('chunkNames.json', {});
   config.plugins.push(stats);
+  config.plugins.push(
+    new HtmlWebpackPlugin({
+      title: 'Table Demo',
+      filename: 'index.html',
+      template: './server/index.html',
+      inject: true,
+      chunksSortMode: function (chunk1, chunk2) {
+        const order = ['runtime', 'common', 'vender', 'main'];
+        const order1 = order.indexOf(chunk1.names[0]);
+        const order2 = order.indexOf(chunk2.names[0]);
+        return order1 - order2;
+      }
+    }),
+  );
 
   // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
   // config.plugins.push(new BundleAnalyzerPlugin());
