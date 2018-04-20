@@ -1,7 +1,16 @@
-body {
+#app {
   background: #dddddd;
   font-size: 12px;
-  padding: 20px;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#app > div {
+  height: 100%;
 }
 ::-webkit-scrollbar {
   width: 10px;

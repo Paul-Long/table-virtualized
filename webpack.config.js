@@ -14,8 +14,7 @@ const ENV = process.env.NODE_ENV;
 const config = {
   cache: true,
   entry: {
-    main: path.resolve(__dirname, 'client/index.js'),
-    vendor: ['react', 'react-dom', 'react-router-dom']
+    main: path.resolve(__dirname, 'client/index.js')
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -100,17 +99,17 @@ config.plugins = [
 ];
 
 // optimization
-config.optimization = {
-  splitChunks: {
-    chunks: 'all',
-    name: 'common',
-    minSize: 0,
-    minChunks: 1
-  },
-  runtimeChunk: {
-    name: 'runtime'
-  }
-};
+// config.optimization = {
+//   splitChunks: {
+//     chunks: 'all',
+//     name: 'common',
+//     minSize: 0,
+//     minChunks: 1
+//   },
+//   runtimeChunk: {
+//     name: 'runtime'
+//   }
+// };
 
 if (ENV === 'development') {
   config.devtool = 'eval-source-map';
@@ -119,16 +118,16 @@ if (ENV === 'development') {
 }
 
 if (ENV === 'production') {
-  config.optimization.minimize = true;
-  config.optimization.noEmitOnErrors = true;
-  config.optimization.concatenateModules = true;
+  // config.optimization.minimize = true;
+  // config.optimization.noEmitOnErrors = true;
+  // config.optimization.concatenateModules = true;
 
   const stats = new StatsOutPlugin('chunkNames.json', {});
   config.plugins.push(stats);
   config.plugins.push(
     new HtmlWebpackPlugin({
       title: 'Table Demo',
-      filename: 'index.html',
+      filename: '../index.html',
       template: './server/index.html',
       inject: true,
       chunksSortMode: function (chunk1, chunk2) {
