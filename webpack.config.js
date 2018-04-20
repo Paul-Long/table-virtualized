@@ -18,7 +18,7 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[hash:8].js',
+    filename: '[name].js',
     publicPath: '/'
   },
   resolve: {
@@ -37,7 +37,7 @@ const config = {
 };
 
 // mode 环境
-config.mode = ENV;
+// config.mode = ENV;
 
 // module loaders
 config.module = {
@@ -45,9 +45,9 @@ config.module = {
     {
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
-      include: [
-        path.resolve(__dirname, 'client')
-      ],
+      // include: [
+      //   path.resolve(__dirname, 'client')
+      // ],
       // loader: 'babel-loader'
       loader: 'happypack/loader?id=js'
     }, {
@@ -82,14 +82,14 @@ config.module = {
 config.plugins = [
   new CaseSensitivePathsPlugin(),
   new CleanPlugin([path.resolve(__dirname, 'dist')], {verbose: true}),
-  new ExtractTextPlugin({filename: '[name].[contenthash:8].css', allChunks: true}),
+  new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
   new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(ENV)
   }),
-  new webpack.LoaderOptionsPlugin({
-    minimize: ENV === 'production'
-  }),
+  // new webpack.LoaderOptionsPlugin({
+  //   minimize: ENV === 'production'
+  // }),
   new HappyPack({
     id: 'js',
     threadPool: happyThreadPool,
@@ -127,15 +127,9 @@ if (ENV === 'production') {
   config.plugins.push(
     new HtmlWebpackPlugin({
       title: 'Table Demo',
-      filename: '../index.html',
+      filename: 'index.html',
       template: './server/index.html',
-      inject: true,
-      chunksSortMode: function (chunk1, chunk2) {
-        const order = ['runtime', 'common', 'vender', 'main'];
-        const order1 = order.indexOf(chunk1.names[0]);
-        const order2 = order.indexOf(chunk2.names[0]);
-        return order1 - order2;
-      }
+      inject: true
     }),
   );
 

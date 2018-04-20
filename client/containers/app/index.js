@@ -136,9 +136,6 @@ class App extends React.Component {
   componentDidMount() {
     let n = (new Date()).getTime();
     console.log('render time -> ', n - this.timer);
-    // setInterval(() => {
-    //   this.setState({data: update()});
-    // }, 2000);
   }
 
   render() {
