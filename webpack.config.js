@@ -37,7 +37,7 @@ const config = {
 };
 
 // mode 环境
-// config.mode = ENV;
+config.mode = ENV;
 
 // module loaders
 config.module = {
@@ -87,9 +87,9 @@ config.plugins = [
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(ENV)
   }),
-  // new webpack.LoaderOptionsPlugin({
-  //   minimize: ENV === 'production'
-  // }),
+  new webpack.LoaderOptionsPlugin({
+    minimize: ENV === 'production'
+  }),
   new HappyPack({
     id: 'js',
     threadPool: happyThreadPool,
