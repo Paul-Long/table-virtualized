@@ -60,6 +60,7 @@ const columns = [
   {
     title: '第五列',
     align: 'left',
+    fixed: 'right',
     dataIndex: 'key3',
     width: 100,
     // bodyStyle: {background: '#121A18', color: '#7B8280'}
