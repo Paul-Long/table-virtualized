@@ -54,23 +54,23 @@ const columns = [
     title: '第四列',
     align: 'left',
     dataIndex: 'key2',
-    width: 100,
+    width: 130,
     // bodyStyle: {background: '#121A18', color: '#F9C152'}
   },
   {
     title: '第五列',
     align: 'left',
-    fixed: 'right',
     dataIndex: 'key3',
-    width: 100,
+    width: 120,
     // bodyStyle: {background: '#121A18', color: '#7B8280'}
   },
-  // {
-  //   title: '第六列',
-  //   align: 'left',
-  //   dataIndex: 'key4',
-  //   width: 100,
-  // },
+  {
+    title: '第六列',
+    align: 'left',
+    fixed: 'right',
+    dataIndex: 'key4',
+    width: 100,
+  },
   // {
   //   title: '第七列',
   //   align: 'left',
