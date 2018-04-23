@@ -11,8 +11,8 @@ const columns = [
     order: true,
     fixed: 'left',
     width: 100,
-    render: (text) => (<span>{text}</span>)
-    // bodyStyle: {background: '#121A18', color: '#F9C152'}
+    render: (text) => (<span>{text}</span>),
+    onCell: () => ({color: '#F9C152'})
   },
   {
     title: '第二列',
@@ -40,7 +40,12 @@ const columns = [
     title: '第三列',
     dataIndex: 'key1',
     width: 100,
-    bodyStyle: {background: '#122024', color: '#11A1FF'},
+    onCell: (column, record, index) => {
+      if (index % 2 === 0) {
+        return {background: '#122024', color: '#11A1FF'};
+      }
+      return {color: '#11A1FF'};
+    },
     // children: [
     //   {
     //     title: '第三列-01', align: 'left', dataIndex: 'b1', width: 120
@@ -55,14 +60,21 @@ const columns = [
     align: 'left',
     dataIndex: 'key2',
     width: 130,
-    // bodyStyle: {background: '#121A18', color: '#F9C152'}
+    onCell: (column, record, index) => {
+      if (index % 2 === 0) {
+        return {background: '#121A18', color: '#F9C152'};
+      }
+      return {color: '#F9C152'};
+    }
   },
   {
     title: '第五列',
     align: 'left',
     dataIndex: 'key3',
     width: 120,
-    // bodyStyle: {background: '#121A18', color: '#7B8280'}
+    onCell: (column, record, index) => {
+      return {color: '#7B8280'};
+    }
   },
   {
     title: '第六列',
